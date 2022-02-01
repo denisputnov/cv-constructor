@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Cropper from "react-easy-crop";
 import { Point, Area } from "react-easy-crop/types";
+import styled from 'styled-components';
 import ImageUploader from './components/ImageUploader';
 
 export default function App() {
@@ -29,7 +30,13 @@ export default function App() {
   //   </div>
   // );
   return (
-    <ImageUploader />
+    <ImageUploadContainer>
+      <ImageUploader />
+    </ImageUploadContainer>
   )
-  
 }
+
+const ImageUploadContainer = styled.div`
+  width: 400px;
+  padding: 20px;
+`
