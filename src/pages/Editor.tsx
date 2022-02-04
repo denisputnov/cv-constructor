@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Layout, Popover } from 'antd';
+import { Divider, Layout, Popover, Tooltip } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined, CloseCircleOutlined, SettingOutlined } from '@ant-design/icons';
 import Drawer from '../components/Drawer/Drawer';
 import PaddingInput from '../components/Inputs/PaddingInput';
@@ -17,19 +17,39 @@ interface TriggerButtonProps {
 const SiderTrigger: React.FC<TriggerButtonProps> = ({ collapsed, onClick }) => {
   return (
     <FloatingTriggerButton onClick={onClick}>
-      {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      <Tooltip placement='right' title={`${collapsed ? 'Open' : 'Close'} sidebar`}>
+        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      </Tooltip>
     </FloatingTriggerButton>
   )
 }
 
-const DocumentSettings: React.FC = () => {
+const EditorSettings: React.FC = () => {
   const [opened, setOpened] = useState<boolean>(false)
   return (
-    <Popover visible={opened} trigger='click' placement='bottomLeft' content={"lorem impsum dolores set amet lorem impsum dolores set amet lorem impsum dolores set amet lorem impsum dolores set amet lorem impsum dolores set amet lorem impsum dolores set amet lorem impsum dolores set amet lorem impsum dolores set amet "}>
+    <Popover 
+      visible={opened} 
+      trigger='click' 
+      placement='bottomLeft' 
+      content={EditorSettingsContent} 
+      onVisibleChange={visible => setOpened(visible)}
+    >
       <FloatingTriggerButton onClick={() => setOpened(!opened)}>
-        {opened ? <CloseCircleOutlined /> : <SettingOutlined />}
+        <Tooltip placement='right' title={`${opened ? 'Close' : 'Open'} editor settings`}>
+          {opened ? <CloseCircleOutlined /> : <SettingOutlined />}
+        </Tooltip>
       </FloatingTriggerButton>
     </Popover>
+  )
+}
+
+const EditorSettingsContent = () => {
+  return (
+    <>
+      {/* <Divider orientation="left" orientationMargin={0}>Editor Settings</Divider> */}
+      <Divider orientation="left" orientationMargin={0}>Paddings</Divider>
+      <PaddingInput />
+    </>
   )
 }
 
@@ -48,9 +68,8 @@ const Editor = () => {
       >
         <EditorFloatingButtons>
           <SiderTrigger collapsed={collapsed} onClick={() => setCollapsed(!collapsed)} />
-          <DocumentSettings />
+          <EditorSettings />
         </EditorFloatingButtons>
-        <PaddingInput />
       </EditorSider>
       <EditorContent>
         <Drawer />

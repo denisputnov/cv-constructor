@@ -1,40 +1,37 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
+import editorSettins, { Paddings } from '../../store/editorSettins';
 import { getPaddingFromIndent } from './utils';
-
-type Margin = number | [number, number] | [number, number, number, number];
 
 interface DrawerProps {
   columns?: number | number[];
   rows?: number | string;
-  margin?: Margin;
+  paddings?: Paddings;
 }
 
-const Drawer = ({
+const Drawer = observer(({
   columns = 1,
-  rows = 'auto',
-  margin = 5
+  rows = 'auto'
 }: DrawerProps) => {
   return (
     <DrawerWrapper
       $columns={columns}
       $rows={rows}
     >
-      <DrawerContent $margin={margin} />
+      <DrawerContent $paddings={editorSettins.paddings} />
     </DrawerWrapper>
   );
-}
+})
 
 const DrawerContent = styled.div<{
-  $margin: Margin
+  $paddings: Paddings
 }>`
   flex: 1;
   background: #e6e6e6;
-  margin: ${({ $margin }) => {
-    if (Array.isArray($margin)) {
-      return $margin.map(n => getPaddingFromIndent(n) + '%').join(' ')
-    }
-    return `${getPaddingFromIndent($margin)}%`
+  margin: ${({ $paddings }) => {
+    const paddings = [$paddings.top, $paddings.right, $paddings.bottom, $paddings.left]
+    return paddings.map(value => getPaddingFromIndent(value) + '%').join(' ')
   }};
 `
 
