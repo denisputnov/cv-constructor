@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Radio, InputNumber } from 'antd';
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
-import editorSettins, { Paddings, PaddingSettingModes } from '../../store/editorSettins';
+import editorSettins, { Paddings, PaddingSettingModes } from '../../../store/editorSettins';
 
 
 type Mode = 'all' | 'oposite' | 'one'
@@ -89,6 +89,7 @@ const PaddingInput = observer(() => {
   );
 })
 
+
 const InputsContainer = styled.div<{
   $mode: Mode
 }>`
@@ -102,17 +103,37 @@ const InputsContainer = styled.div<{
   padding-top: 10px;
   gap: 10px;
   
-  & .ant-input-number {
+  
+  & .ant-input-number-wrapper {
     width: 100%;
+    box-shadow: 0px 3px 10px 0px rgba(34, 60, 80, 0.1);
+    border-radius: 10px;
+
+    .ant-input-number-group-addon {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      width: 85px;
+      text-align: left;
+      border: none;
+      color: #00000076;
+    }
+
+    .ant-input-number {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      border: none;
+    }
   }
 `
 
 const StyledRadioButton = styled(Radio.Button)`
   border: none;
+  
   &.ant-radio-button-wrapper-checked,
   &:first-child {
     border: none;
   }
+
   &::before {
     content: none !important;
   }

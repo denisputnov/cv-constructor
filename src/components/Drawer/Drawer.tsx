@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import styled from 'styled-components';
 import editorSettins, { Paddings } from '../../store/editorSettins';
+import userData from '../../store/userData';
 import { getPaddingFromIndent } from './utils';
 
 interface DrawerProps {
@@ -19,7 +20,11 @@ const Drawer = observer(({
       $columns={columns}
       $rows={rows}
     >
-      <DrawerContent $paddings={editorSettins.paddings} />
+      <DrawerContent $paddings={editorSettins.paddings}>
+        {JSON.stringify(userData.global)}
+        {JSON.stringify(userData.language)}
+        <img src={userData.image ?? ""} alt="" />
+      </DrawerContent>
     </DrawerWrapper>
   );
 })

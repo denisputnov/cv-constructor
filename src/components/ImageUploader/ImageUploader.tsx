@@ -5,15 +5,16 @@ import { Area, Point } from "react-easy-crop/types";
 import Cropper from "react-easy-crop";
 import { Slider } from "antd";
 import { getCroppedImg } from "./utils";
+import userData from "../../store/userData";
+import { observer } from "mobx-react-lite";
 
-const ImageUploader: React.FC = () => {
+const ImageUploader: React.FC = observer(() => {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>('');
-  const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(3);
 
   const getCroppedImage = useCallback(async (croppedAreaPixels: Area) => {
     try {
@@ -21,7 +22,7 @@ const ImageUploader: React.FC = () => {
         preview,
         croppedAreaPixels
       )
-      setCroppedImage(croppedImage)
+      userData.setNewImage(croppedImage)
     } catch (e) {}
   }, [preview])
 
@@ -72,7 +73,8 @@ const ImageUploader: React.FC = () => {
             tooltipVisible={false}
             onChange={(newValue) => {
               setZoom(newValue);
-            }} />
+            }} 
+          />
         </SliderWrapper>
       </>
       }
@@ -105,10 +107,10 @@ const ImageUploader: React.FC = () => {
         onChange={(event) => handleFileInput(event.target.files, event)}
       />
     </ImageUploadArea>
-    <img src={croppedImage ?? ''} alt="" />
+    {/* <img src={croppedImage ?? ''} alt="" /> */}
     </>
   );
-};
+});
 
 const SliderWrapper = styled.div`
   position: absolute;
@@ -163,7 +165,7 @@ const UploadAnotherButton = styled.button`
 const ImageUploadArea = styled.div`
   position: relative;
   width: 100%;
-  aspect-ratio: 3/4;
+  aspect-ratio: 3/2;
   overflow: hidden;
   background-color: #FAFBFC;
   border: 2px dashed #E2E5E8;

@@ -36,3 +36,32 @@ body .ant-tooltip-inner {
 body .ant-tooltip-arrow-content {
   background-color: #FAFBFC;
 }
+
+.ant-empty {
+  height: 60px;
+  margin: 0 !important; 
+}
+
+.ant-empty > * {
+  font-size: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: rgba(55, 83, 105, 0.2);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(9, 18, 26, 0.2);
+}
