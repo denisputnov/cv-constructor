@@ -21,8 +21,7 @@ const Drawer = observer(({
       $rows={rows}
     >
       <DrawerContent $paddings={editorSettins.paddings}>
-        {JSON.stringify(userData.global)}
-        {JSON.stringify(userData.language)}
+        {JSON.stringify(userData.summary)}
         <img src={userData.image ?? ""} alt="" />
       </DrawerContent>
     </DrawerWrapper>

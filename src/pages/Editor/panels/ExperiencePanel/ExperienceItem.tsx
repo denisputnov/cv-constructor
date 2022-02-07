@@ -1,6 +1,5 @@
 import FloatingTextInput from "../../../../lib/FloatingTextInput"
 import InputItemWrapper from "../../../../lib/InputItemWrapper"
-import { Experience } from "../../../../store/userData"
 
 interface ExperienceItemProps {
   start: string
@@ -55,7 +54,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
         error={!position.length}
       />
       <FloatingTextInput 
-        placeholder='Work and activity desription (in 2-3 sentences)  '
+        placeholder='Work and activity description (in 2-3 sentences)'
         value={description}
         onChange={onDescriptionChange}
         error={!description.length}

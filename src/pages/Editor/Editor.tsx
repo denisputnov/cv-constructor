@@ -1,16 +1,22 @@
 import { useState } from 'react';
+
 import styled from 'styled-components';
+import { StyledCollapse } from './styled-components';
+
 import { Layout, Collapse } from 'antd';
+
 import ImageUploader from '../../components/ImageUploader/ImageUploader';
 import EditorSettings from './components/EditorSettings';
 import SiderTrigger from './components/SliderTrigger';
+
 import ContactsPanel from './panels/ContactsPanel/ContactsPanel';
 import GlobalInfoPanel from './panels/GlobalInfoPanel';
 import KeySkillsPanel from './panels/KeySkillsPanel';
-import LanguagePanel from './panels/LanguagePanel/LanguagePanel';
-import { StyledCollapse } from './styled-components';
-import Drawer from '../../components/Drawer/Drawer';
 import ExperiencePanel from './panels/ExperiencePanel/ExperiencePanel';
+import EducationPanel from './panels/EducationPanel/EducationPanel';
+import LanguagePanel from './panels/LanguagePanel/LanguagePanel';
+
+import Drawer from '../../components/Drawer/Drawer';
 
 
 const { Sider, Content } = Layout;
@@ -31,7 +37,7 @@ const Editor = () => {
         collapsible
       >
         <ImageUploader />
-        <StyledCollapse expandIconPosition='right' ghost defaultActiveKey={[1,2,3,4,5]}>
+        <StyledCollapse expandIconPosition='right' ghost defaultActiveKey={[1,2,3,4,5,6]}>
           <Panel key="1" header="Global Info">
             <GlobalInfoPanel />
           </Panel>
@@ -46,6 +52,9 @@ const Editor = () => {
           </Panel>
           <Panel key="5" header="Experience">
             <ExperiencePanel />
+          </Panel>
+          <Panel key="6" header="Education">
+            <EducationPanel />
           </Panel>
         </StyledCollapse>
       </EditorSider>
