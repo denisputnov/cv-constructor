@@ -82,7 +82,7 @@ class UserData {
   }
 
   addContact(name: string) {
-    this.contacts.push({name, value: ""})
+    this.contacts =this.contacts.concat([{name, value: ""}])
   }
 
   removeContact(index: number) {
@@ -90,11 +90,17 @@ class UserData {
   }
 
   setContactValue(index: number, value: string) {
-    this.contacts[index].value = value
+    this.contacts = this.contacts.map((val, idx) => {
+      if (idx === index) return { ...val, value }
+      return val
+    })
   }
 
   setContactName(index: number, name: string) {
-    this.contacts[index].name = name
+    this.contacts = this.contacts.map((val, idx) => {
+      if (idx === index) return { ...val, name }
+      return val
+    })
   }
 
   addLanguage(name: string) {

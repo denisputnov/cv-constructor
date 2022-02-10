@@ -1,9 +1,11 @@
-import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import editorSettins, { Paddings } from '../../store/editorSettins';
+import { observer } from 'mobx-react-lite';
 import userData from '../../store/userData';
 import { getPaddingFromIndent } from './utils';
+import ReactToPrint from "react-to-print";
+import Classic from '../../templates/classic/Classic';
 
 interface DrawerProps {
   columns?: number | number[];
@@ -15,27 +17,38 @@ const Drawer = observer(({
   columns = 1,
   rows = 'auto'
 }: DrawerProps) => {
+  const drawerRef = useRef<HTMLDivElement>(null)
+  const reactToPrintContent = React.useCallback(() => {
+    return drawerRef.current;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [drawerRef.current]);
   return (
-    <DrawerWrapper
-      $columns={columns}
-      $rows={rows}
-    >
-      <DrawerContent $paddings={editorSettins.paddings}>
-        {JSON.stringify(userData.summary)}
-        <img src={userData.image ?? ""} alt="" />
-      </DrawerContent>
-    </DrawerWrapper>
+    <>
+      <ReactToPrint content={reactToPrintContent} />
+      <DrawerWrapper
+        ref={drawerRef}
+        $columns={columns}
+        $rows={rows}
+      >
+        <DrawerContent $paddings={editorSettins.paddings}>
+          <Classic data={userData.summary} />
+        </DrawerContent>
+      </DrawerWrapper>
+    </>
   );
 })
 
 const DrawerContent = styled.div<{
   $paddings: Paddings
 }>`
-  flex: 1;
-  background: #e6e6e6;
+  /* background: #F5F5F5; */
   margin: ${({ $paddings }) => {
     const paddings = [$paddings.top, $paddings.right, $paddings.bottom, $paddings.left]
     return paddings.map(value => getPaddingFromIndent(value) + '%').join(' ')
+  }};
+  overflow: hidden;
+  height: ${({ $paddings }) => {
+    return `calc(100% - ${$paddings.top} - ${$paddings.bottom})`
   }};
 `
 
