@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { TemplateProps } from '../common/ types';
 import Avatar from '../common/components/Avatar';
+import { Phone } from '../common/icons';
 
 const Classic: React.FC<TemplateProps> = ({ data }) => {
 
@@ -28,7 +29,7 @@ const Contacts = styled.div`
 `
 
 const ContactsItem = styled.p`
-  
+  margin-bottom: 0;
 `
 
 const Name = styled.p`
@@ -36,7 +37,8 @@ const Name = styled.p`
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  `
+  margin-bottom: 0;
+`
 
 const Position = styled.p`
   font-size: 0.7em;
