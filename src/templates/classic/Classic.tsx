@@ -19,7 +19,6 @@ const Classic: React.FC<TemplateProps> = ({ data }) => {
       <div>
         <Name>{data.global.name} {data.global.surname}</Name>
         <Position>{data.global.position}</Position>
-        <Phone />
       </div>
     </Layout>
   )
