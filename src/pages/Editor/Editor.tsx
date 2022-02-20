@@ -19,7 +19,6 @@ import EducationPanel from './panels/EducationPanel/EducationPanel';
 import LanguagePanel from './panels/LanguagePanel/LanguagePanel';
 
 import Drawer from '../../components/Drawer/Drawer';
-import Print from './components/Print';
 
 const { Sider, Content } = Layout;
 

@@ -1,4 +1,3 @@
-import { Result } from "antd";
 import { makeAutoObservable } from "mobx";
 
 export type GlobalInfo = {
