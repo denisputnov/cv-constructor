@@ -16,7 +16,7 @@ class EditorSetitns {
     bottom: 5
   }
 
-  customFontSize?: string
+  customFontSize?: string = this.calculateFontSize()
   
   constructor() {
     makeAutoObservable(this)
@@ -58,7 +58,13 @@ class EditorSetitns {
 
   setCustomFontSize(value: string) {
     if (value) return this.customFontSize = value.replaceAll(',', '.').replaceAll(' ', '')
-    this.customFontSize = undefined
+    this.customFontSize = this.calculateFontSize()
+  }
+
+  calculateFontSize() {
+    const MIN_FONT_SIZE = 9
+    const MAX_FONT_SIZE = 5
+    return (MIN_FONT_SIZE + MAX_FONT_SIZE * ((window.innerWidth - 1280) / (1920 - 1280))).toString()
   }
 }
 

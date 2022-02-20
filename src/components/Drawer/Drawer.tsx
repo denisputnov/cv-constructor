@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import editorSettins, { Paddings } from '../../store/editorSettins';
 import { observer } from 'mobx-react-lite';
@@ -16,13 +16,25 @@ const Drawer = observer(({
   columns = 1,
   rows = 'auto'
 }: DrawerProps) => {
+  const drawerContentRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleResize = () => {
+      editorSettins.setCustomFontSize(editorSettins.calculateFontSize())
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   return (
     <DrawerWrapper 
       id='print-area'
       $columns={columns}
       $rows={rows}
     >
-      <DrawerContent $paddings={editorSettins.paddings} $fontSize={editorSettins.customFontSize}>
+      <DrawerContent ref={drawerContentRef} $paddings={editorSettins.paddings} $fontSize={editorSettins.customFontSize}>
         <Classic data={userData.summary} />
       </DrawerContent>
     </DrawerWrapper>
@@ -33,7 +45,7 @@ const DrawerContent = styled.div<{
   $paddings: Paddings
   $fontSize?: string 
 }>`
-  font-size: ${({ $fontSize }) => $fontSize ? $fontSize + 'px' : 'calc(12px + 2 * ((100vw - 1280px) / (1920 - 1280)))'};
+  font-size: ${({ $fontSize }) => $fontSize ? $fontSize + 'px' : '14px'};
   margin: ${({ $paddings }) => {
     const paddings = [$paddings.top, $paddings.right, $paddings.bottom, $paddings.left]
     return paddings.map(value => getPaddingFromIndent(value) + '%').join(' ')

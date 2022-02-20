@@ -18,14 +18,6 @@ p {
 }
 
 @media print {
-  /* body * {
-    visibility: hidden;
-  } */
-
-  /* #print-area, #print-area * {
-    visibility: visible;
-  } */
-
   body .ant-layout-sider,
   body button {
     display: none;
@@ -33,32 +25,22 @@ p {
 
   body .ant-layout-content {
     padding: 0;
+    width: min-content !important;
   }
 
   body .ant-layout-content > div:not(#print-area) {
     display: none;
   }
-  
-  /* #print-area {
-    position: absolute !important;
-    top: 0;
-    left: 0;
-    width: 21cm;
-    height: 29.7cm;
-    aspect-ratio: unset !important;
-    box-shadow: unset;
-  } */
 
-  #print-area {
-    position: absolute !important;
-    right: 0;
-    top: 0;
-    box-shadow: none;
+  body .ant-layout {
+    width: min-content;
   }
 
-  #print-area > div {
-    color: red;
-    background-color: blue;
+  #print-area {
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    box-shadow: none;
   }
 
   @page {
