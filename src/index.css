@@ -17,6 +17,56 @@ p {
   text-align: left;
 }
 
+@media print {
+  /* body * {
+    visibility: hidden;
+  } */
+
+  /* #print-area, #print-area * {
+    visibility: visible;
+  } */
+
+  body .ant-layout-sider,
+  body button {
+    display: none;
+  }
+
+  body .ant-layout-content {
+    padding: 0;
+  }
+
+  body .ant-layout-content > div:not(#print-area) {
+    display: none;
+  }
+  
+  /* #print-area {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 21cm;
+    height: 29.7cm;
+    aspect-ratio: unset !important;
+    box-shadow: unset;
+  } */
+
+  #print-area {
+    position: absolute !important;
+    right: 0;
+    top: 0;
+    box-shadow: none;
+  }
+
+  #print-area > div {
+    color: red;
+    background-color: blue;
+  }
+
+  @page {
+    size: A4; 
+    margin: 0;
+  }
+}
+
 .ant-popover {
   max-width: max(calc(70vw - max(30vw, 400px)), 400px);
 }

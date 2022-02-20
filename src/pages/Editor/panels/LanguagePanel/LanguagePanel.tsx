@@ -6,12 +6,20 @@ import { PanelContentWrapper } from "../../styled-components"
 import LanguageItem from "./LanguageItem"
 
 const LanguagePanel = observer(() => {
+  const languagePrediction = [
+    'English',
+    'Deutsch',
+    'French',
+    'Spanish',
+    'Elvish',
+  ]
+
   return (
     <PanelContentWrapper>
       {userData.language.map(({name, level}, index) => 
         <LanguageItem 
           key={`language-${index}`} 
-          index={index}
+          placeholder={languagePrediction[userData.language.length % 5]}
           name={name}
           onNameChange={value => userData.setLanguageName(index, value)} 
           level={level} 
@@ -19,7 +27,7 @@ const LanguagePanel = observer(() => {
           onDelete={() => userData.removeLanguage(index)}
         />)}
       {!userData.language.length && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-      <AddButton disabled={userData.language.length >= 5} title="Add language" onClick={() => userData.addLanguage(`Language ${userData.language.length + 1}`)} />
+      <AddButton disabled={userData.language.length >= 5} title="Add language" onClick={() => userData.addLanguage(languagePrediction[userData.language.length % 5])} />
     </PanelContentWrapper>
   )
 })

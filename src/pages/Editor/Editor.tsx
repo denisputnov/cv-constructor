@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 import { StyledCollapse } from './styled-components';
 
 import { Layout, Collapse } from 'antd';
 
+import { useSearchParams } from 'react-router-dom';
+
 import ImageUploader from '../../components/ImageUploader/ImageUploader';
-import EditorSettings from './components/EditorSettings';
+import EditorSettings from './components/EditorSettings/EditorSettings';
 import SiderTrigger from './components/SliderTrigger';
 
 import ContactsPanel from './panels/ContactsPanel/ContactsPanel';
@@ -17,21 +19,26 @@ import EducationPanel from './panels/EducationPanel/EducationPanel';
 import LanguagePanel from './panels/LanguagePanel/LanguagePanel';
 
 import Drawer from '../../components/Drawer/Drawer';
-
+import Print from './components/Print';
 
 const { Sider, Content } = Layout;
 
 const { Panel } = Collapse;
 
 const Editor = () => {
-  const [collapsed, setCollapsed] = useState<boolean>(false)
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [collapsed, setCollapsed] = useState<boolean>(searchParams.get('editorCollapsed') === 'true' ? true : false)
+
+  useEffect(() => {
+    setSearchParams({ editorCollapsed: collapsed.toString() })
+  }, [collapsed, setSearchParams])
 
   return (
     <EditorLayout>
       <EditorSider
         trigger={null}
         collapsed={collapsed}
-        onCollapse={() => setCollapsed(!collapsed)}
         width="max(30vw, 400px)"
         collapsedWidth={0}
         collapsible
@@ -59,9 +66,10 @@ const Editor = () => {
         </StyledCollapse>
       </EditorSider>
       <EditorContent>
-        <EditorFloatingButtons>
+        <EditorFloatingButtons $spaceAfter={2}>
           <SiderTrigger collapsed={collapsed} onClick={() => setCollapsed(!collapsed)} />
           <EditorSettings />
+          {/* <Print /> */}
         </EditorFloatingButtons>
         <Drawer />
       </EditorContent>
@@ -73,15 +81,22 @@ const EditorLayout = styled(Layout)`
   height: 100vh;
 `
 
-const EditorFloatingButtons = styled.div`
+const EditorFloatingButtons = styled.div<{
+  $right?: boolean
+  $spaceAfter?: number
+}>`
   position: absolute;
   display: flex;
   top: 10px;
   bottom: 10px;
-  left: 10px;
+  ${({ $right }) => $right ? 'right: 10px' : 'left: 10px'};
   gap: 10px;
   flex-direction: column;
   z-index: 10;
+
+  > *:nth-child(${({ $spaceAfter }) => $spaceAfter ?? 1000}) {
+    margin-bottom: auto;
+  }
 `
 
 const EditorSider = styled(Sider)`

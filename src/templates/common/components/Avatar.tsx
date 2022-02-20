@@ -22,7 +22,7 @@ const DefaultAvatar = () => {
     <svg width="100%" height="100%" viewBox="0 0 600 800" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="100%" height="100%" fill="#E6E6E6"/>
       <circle cx="299.5" cy="285.5" r="104.5" fill="#C4C4C4"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M525 645C525 520.736 424.264 420 300 420C175.736 420 75 520.736 75 645H525Z" fill="#C4C4C4"/>
+      <path fillRule="evenodd" clipRule="evenodd" d="M525 645C525 520.736 424.264 420 300 420C175.736 420 75 520.736 75 645H525Z" fill="#C4C4C4"/>
     </svg>
   )
 }

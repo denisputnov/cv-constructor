@@ -16,6 +16,8 @@ class EditorSetitns {
     bottom: 5
   }
 
+  customFontSize?: string
+  
   constructor() {
     makeAutoObservable(this)
   }
@@ -52,6 +54,11 @@ class EditorSetitns {
         }
         break
     }
+  }
+
+  setCustomFontSize(value: string) {
+    if (value) return this.customFontSize = value.replaceAll(',', '.').replaceAll(' ', '')
+    this.customFontSize = undefined
   }
 }
 

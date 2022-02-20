@@ -24,7 +24,7 @@ const ContactsPanel = observer(() => {
       <AddButton 
         disabled={userData.contacts.length >= 5} 
         title="Add contact" 
-        onClick={() => userData.addContact(contactsPrediction[userData.contacts.length])} 
+        onClick={() => userData.addContact(contactsPrediction[userData.contacts.length % 5])} 
       />
     </PanelContentWrapper>
   )

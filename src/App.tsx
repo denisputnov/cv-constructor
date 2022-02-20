@@ -1,16 +1,14 @@
 import React from 'react';
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import Editor from './pages/Editor/Editor';
-import ImageUploader from './components/ImageUploader/ImageUploader';
-import styled from 'styled-components';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 export default function App() {
   return (
-    <Editor></Editor>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Editor/>}/>
+      </Routes>
+    </BrowserRouter>
   )
 }
-
-const Wrapper = styled.div`
-  width: 400px;
-  height: 300px;
-`

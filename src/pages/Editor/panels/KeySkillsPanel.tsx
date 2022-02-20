@@ -9,6 +9,10 @@ import { PanelContentWrapper, StyledTag } from "../styled-components"
 
 const KeySkillsPanel = observer(() => {
   const [skillInputValue, setSkillInputValue] = useState<string>('')
+  const addSkill = () => {
+    userData.addSkill(skillInputValue)
+    setSkillInputValue('')
+  }
 
   return (
     <PanelContentWrapper>
@@ -23,14 +27,12 @@ const KeySkillsPanel = observer(() => {
           placeholder='Skill'
           value={skillInputValue}
           onChange={setSkillInputValue}
+          onPressEnter={addSkill}
         />
         <AddButton 
           disabled={userData.skills.length >= 15 || userData.skills.includes(skillInputValue) || skillInputValue.length <= 1} 
           title="Add skill" 
-          onClick={() => {
-            userData.addSkill(skillInputValue)
-            setSkillInputValue('')
-          }} 
+          onClick={addSkill} 
         />
       </PanelContentControls>
     </PanelContentWrapper>

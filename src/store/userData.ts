@@ -1,3 +1,4 @@
+import { Result } from "antd";
 import { makeAutoObservable } from "mobx";
 
 export type GlobalInfo = {
@@ -19,21 +20,20 @@ export type Contact = {
   value: string
 }
 
+export type Time = {
+  start: string
+  end: string
+}
+
 export type Experience = {
-  time: {
-    start: string
-    end: string
-  }
+  time: Time
   companyName: string
   position: string
   description: string
 }
 
 export type Education = {
-  time: {
-    start: string
-    end: string
-  },
+  time: Time
   name: string
   speciality: string
   grade: string
@@ -82,7 +82,7 @@ class UserData {
   }
 
   addContact(name: string) {
-    this.contacts =this.contacts.concat([{name, value: ""}])
+    this.contacts = this.contacts.concat([{name, value: ""}])
   }
 
   removeContact(index: number) {
@@ -104,7 +104,7 @@ class UserData {
   }
 
   addLanguage(name: string) {
-    this.language.push({ name, level: "Intermediate" })
+    this.language = this.language.concat([{ name, level: "Intermediate" }])
   }
 
   removeLanguage(index: number) {
@@ -112,15 +112,21 @@ class UserData {
   }
 
   setLanguageLevel(index: number, level: LanguageLevel) {
-    this.language[index].level = level
+    this.language = this.language.map((val, idx) => {
+      if (idx === index) return { ...val, level }
+      return val
+    })
   }
 
   setLanguageName(index: number, name: string) {
-    this.language[index].name = name
+    this.language = this.language.map((val, idx) => {
+      if (idx === index) return { ...val, name }
+      return val
+    })
   }
 
   addSkill(name: string) {
-    this.skills.push(name)
+    this.skills = this.skills.concat(name)
   }
 
   removeSkill(name: string) {
@@ -128,32 +134,37 @@ class UserData {
   }
 
   addExperience() {
-    this.experience.push({
+    this.experience = this.experience.concat({
       time: {
-        start: '',
+        start: '09/2019',
         end: 'Present'
       },
-      companyName: '',
-      position: '',
-      description: ''
+      companyName: 'Google',
+      position: 'Junior Software Engineer',
+      description: 'What is your common tasks?'
     })
   }
 
   setExperience(index: number, key: Exclude<keyof Experience, 'time'> | 'start' | 'end', value: string) {
-    if (key !== 'start' && key !== 'end') {
-      this.experience[index] = {
-        ...this.experience[index],
-        [key]: value
-      }
-    } else {
-      this.experience[index] = {
-        ...this.experience[index],
-        time: {
-          ...this.experience[index].time,
-          [key]: value
+    this.experience = this.experience.map((experience, idx) => {
+      if (index === idx) {
+        if (key !== 'start' && key !== 'end') {
+          return {
+            ...experience,
+            [key]: value
+          }
+        } else {
+          return {
+            ...experience,
+            time: {
+              ...experience.time,
+              [key]: value
+            }
+          }
         }
       }
-    }
+      return experience
+    })
   }
 
   deleteExperience(index: number) {
@@ -161,32 +172,37 @@ class UserData {
   }
 
   addEducation() {
-    this.education.push({
+    this.education = this.education.concat({
       time: {
-        start: '',
-        end: ''
+        start: '09/2019',
+        end: 'Present'
       },
-      name: '',
-      speciality: '',
-      grade: ''
+      name: 'University of Oxford',
+      speciality: 'Computer Science',
+      grade: 'Bachelor'
     })
   }
 
   setEducation(index: number, key: Exclude<keyof Education, 'time'> | 'start' | 'end', value: string) {
-    if (key !== 'start' && key !== 'end') {
-      this.education[index] = {
-        ...this.education[index],
-        [key]: value
-      }
-    } else {
-      this.education[index] = {
-        ...this.education[index],
-        time: {
-          ...this.education[index].time,
-          [key]: value
+    this.education = this.education.map((education, idx) => {
+      if (index === idx) {
+        if (key !== 'start' && key !== 'end') {
+          return {
+            ...education,
+            [key]: value
+          }
+        } else {
+          return {
+            ...education,
+            time: {
+              ...education.time,
+              [key]: value
+            }
+          }
         }
       }
-    }
+      return education
+    })
   }
 
   deleteEducation(index: number) {
@@ -205,8 +221,21 @@ class UserData {
     }
   }
 
-  // converToUrlParams(): string {
-    
+  // converToUrlParams() {
+  //   return `&data=${encodeURI(btoa(JSON.stringify(this.summary)))}`
+  // }
+
+  // setFromUrlParams(data: string | null) {
+  //   if (!data) return;
+  //   const parsedData = JSON.parse(decodeURI(atob(data)))
+
+  //   this.image = parsedData.image
+  //   this.global = parsedData.global
+  //   this.contacts = parsedData.contacts
+  //   this.language = parsedData.language
+  //   this.skills = parsedData.skills
+  //   this.experience = parsedData.experience
+  //   this.education = parsedData.education
   // }
 } 
 

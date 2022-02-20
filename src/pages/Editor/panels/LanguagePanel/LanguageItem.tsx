@@ -7,12 +7,12 @@ interface LanguageItemProps {
   name: string
   level: LanguageLevel
   onNameChange: (value: string) => void
-  index: number
   onLevelChange: (value: LanguageLevel) => void
   onDelete: () => void
+  placeholder: string
 }
 
-const LanguageItem: React.FC<LanguageItemProps> = ({ index, name, onNameChange, level, onLevelChange, onDelete }) => {
+const LanguageItem: React.FC<LanguageItemProps> = ({ name, onNameChange, level, onLevelChange, onDelete, placeholder }) => {
   const options = [
     "Beginner",
     "Elementary",
@@ -22,18 +22,10 @@ const LanguageItem: React.FC<LanguageItemProps> = ({ index, name, onNameChange, 
     "Proficiency"
   ]
 
-  const placeholder = [
-    'English',
-    'Deutsch',
-    'Elvish',
-    'French',
-    'Spanish'
-  ]
-
   return (
     <InputItemWrapper onDelete={onDelete}>
       <FloatingTextInput 
-        placeholder={placeholder[index % placeholder.length]}
+        placeholder={placeholder}
         value={name} 
         onChange={onNameChange}
         error={!name.length}

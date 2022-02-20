@@ -8,9 +8,10 @@ interface FloatingTextInputProps {
   placeholder: string
   error?: boolean
   multiline?: boolean
+  onPressEnter?: () => void
 }
 
-const FloatingTextInput: React.FC<FloatingTextInputProps> = ({ value, onChange, placeholder, error = false, multiline = false}) => {
+const FloatingTextInput: React.FC<FloatingTextInputProps> = ({ value, onChange, placeholder, error = false, multiline = false, onPressEnter = () => {}}) => {
   if (multiline) {
     return (
       <StyledTextArea
@@ -20,6 +21,8 @@ const FloatingTextInput: React.FC<FloatingTextInputProps> = ({ value, onChange, 
         $error={error}
         autoSize={{ minRows: 2, maxRows: 8 }}
         spellCheck
+        autoFocus
+        onPressEnter={onPressEnter}
       />
     )
   }
@@ -29,6 +32,8 @@ const FloatingTextInput: React.FC<FloatingTextInputProps> = ({ value, onChange, 
       value={value}
       onChange={event => onChange(event.target.value)}
       $error={error}
+      autoFocus
+      onPressEnter={onPressEnter}
     />
   );
 }
@@ -40,7 +45,7 @@ const StyledTextArea = styled(Input.TextArea)<{
   border-radius: 10px;
   box-shadow: 0px 3px 10px 0px rgba(34, 60, 80, 0.1);
   ${({ $error }) => {
-    if  ($error) return 'border: 1px solid #ff4d4f'
+    if ($error) return 'border: 1px solid #ff4d4f'
   }};
 `
 
