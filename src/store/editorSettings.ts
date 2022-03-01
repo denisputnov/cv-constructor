@@ -8,7 +8,7 @@ export type Paddings = {
   bottom: number
 }
 
-class EditorSetitns {
+class EditorSetitngs {
   paddings: Paddings = {
     top: 5,
     left: 5,
@@ -56,9 +56,14 @@ class EditorSetitns {
     }
   }
 
-  setCustomFontSize(value: string) {
+  setCustomFontSize(value?: string) {
     if (value) return this.customFontSize = value.replaceAll(',', '.').replaceAll(' ', '')
     this.customFontSize = this.calculateFontSize()
+  }
+
+  get fontSize() {
+    if (this.customFontSize) return this.customFontSize
+    return this.calculateFontSize()
   }
 
   calculateFontSize() {
@@ -68,4 +73,4 @@ class EditorSetitns {
   }
 }
 
-export default new EditorSetitns();
+export default new EditorSetitngs();

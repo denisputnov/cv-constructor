@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import editorSettins, { Paddings } from '../../store/editorSettins';
+import editorSettings, { Paddings } from '../../store/editorSettings';
 import { observer } from 'mobx-react-lite';
 import userData from '../../store/userData';
 import { getPaddingFromIndent } from './utils';
@@ -19,13 +19,28 @@ const Drawer = observer(({
   const drawerContentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const handleResize = () => {
-      editorSettins.setCustomFontSize(editorSettins.calculateFontSize())
+    const beforePrint = () => {
+      const drawer = drawerContentRef?.current
+      if (drawer) {
+        const { width } = drawer.getBoundingClientRect() 
+        drawer.style.fontSize = `${parseFloat(editorSettings.fontSize) * 21 / width}cm`
+      }
     }
 
-    window.addEventListener('resize', handleResize)
+    const afterPrint = () => {
+      const drawer = drawerContentRef?.current
+      if (drawer) {
+        drawer.style.fontSize = ''
+      }
+    }
 
-    return () => window.removeEventListener('resize', handleResize)
+    window.addEventListener('beforeprint', beforePrint)
+    window.addEventListener('afterprint', afterPrint)
+
+    return () => {
+      window.removeEventListener('beforeprint', beforePrint)
+      window.removeEventListener('afterprint', afterPrint)
+    }
   }, [])
 
   return (
@@ -34,7 +49,7 @@ const Drawer = observer(({
       $columns={columns}
       $rows={rows}
     >
-      <DrawerContent ref={drawerContentRef} $paddings={editorSettins.paddings} $fontSize={editorSettins.customFontSize}>
+      <DrawerContent ref={drawerContentRef} $paddings={editorSettings.paddings} $fontSize={editorSettings.customFontSize}>
         <Classic data={userData.summary} />
       </DrawerContent>
     </DrawerWrapper>
@@ -45,7 +60,7 @@ const DrawerContent = styled.div<{
   $paddings: Paddings
   $fontSize?: string 
 }>`
-  font-size: ${({ $fontSize }) => $fontSize ? $fontSize + 'px' : '14px'};
+  font-size: ${({ $fontSize }) => $fontSize ? $fontSize + 'px' : '(9 + 5 * (100vw - 1280) / (1920px - 1280)'};
   margin: ${({ $paddings }) => {
     const paddings = [$paddings.top, $paddings.right, $paddings.bottom, $paddings.left]
     return paddings.map(value => getPaddingFromIndent(value) + '%').join(' ')

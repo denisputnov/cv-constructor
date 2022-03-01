@@ -20,6 +20,7 @@ import LanguagePanel from './panels/LanguagePanel/LanguagePanel';
 
 import Drawer from '../../components/Drawer/Drawer';
 import Print from './components/Print';
+import Save from './components/Save';
 
 const { Sider, Content } = Layout;
 
@@ -69,6 +70,7 @@ const Editor = () => {
         <EditorFloatingButtons $spaceAfter={2}>
           <SiderTrigger collapsed={collapsed} onClick={() => setCollapsed(!collapsed)} />
           <EditorSettings />
+          <Save />
           <Print />
         </EditorFloatingButtons>
         <Drawer />

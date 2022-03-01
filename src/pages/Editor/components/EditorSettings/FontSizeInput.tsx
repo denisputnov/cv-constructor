@@ -1,18 +1,18 @@
 import React from 'react'
 import { InputNumber } from 'antd'
 import { observer } from 'mobx-react-lite'
-import editorSettins from '../../../../store/editorSettins'
+import editorSettings from '../../../../store/editorSettings'
 
 const FontSizeInput = observer(() => {
   return (
     <InputNumber 
       addonBefore='Font Size' 
-      value={editorSettins.customFontSize} 
+      value={editorSettings.customFontSize} 
       placeholder='Default' 
       stringMode
       controls={false} 
       onChange={value => 
-        editorSettins.setCustomFontSize(value)
+        editorSettings.setCustomFontSize(value)
       }
     />
   )

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Radio, InputNumber } from 'antd';
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
-import editorSettins, { Paddings, PaddingSettingModes } from '../../../../store/editorSettins';
+import editorSettings, { Paddings, PaddingSettingModes } from '../../../../store/editorSettings';
 
 
 type Mode = 'all' | 'oposite' | 'one'
@@ -11,7 +11,7 @@ const PaddingInput = observer(() => {
   const [mode, setMode] = useState<Mode>('one')
   
   useEffect(() => {
-    editorSettins.setPadding(5, 'all')
+    editorSettings.setPadding(5, 'all')
   }, [mode])
 
   const inputsLayout = useMemo(() => {
@@ -20,12 +20,12 @@ const PaddingInput = observer(() => {
         return (
           <InputNumber
             addonBefore={'All around'} 
-            value={editorSettins.paddings.top} 
+            value={editorSettings.paddings.top} 
             min={2} 
             max={30} 
             defaultValue={5} 
             controls={false} 
-            onChange={value => editorSettins.setPadding(value, 'all')}
+            onChange={value => editorSettings.setPadding(value, 'all')}
           />
         )
       case 'oposite':
@@ -33,20 +33,20 @@ const PaddingInput = observer(() => {
           <>
             <InputNumber 
               addonBefore={'Top & Bottom'} 
-              value={editorSettins.paddings.top}
+              value={editorSettings.paddings.top}
               min={2} 
               max={30} 
               defaultValue={5} 
               controls={false} 
-              onChange={value => editorSettins.setPadding(value, 'topbottom')}
+              onChange={value => editorSettings.setPadding(value, 'topbottom')}
             />
             <InputNumber
               addonBefore={'Left & Right'} 
-              value={editorSettins.paddings.left}
+              value={editorSettings.paddings.left}
               max={30} 
               defaultValue={5} 
               controls={false} 
-              onChange={value => editorSettins.setPadding(value, 'leftright')}
+              onChange={value => editorSettings.setPadding(value, 'leftright')}
             />
           </>
         )
@@ -57,13 +57,13 @@ const PaddingInput = observer(() => {
               <InputNumber 
                 key={name}
                 addonBefore={name} 
-                value={editorSettins.paddings[name.toLowerCase() as keyof Paddings]}
+                value={editorSettings.paddings[name.toLowerCase() as keyof Paddings]}
                 min={2} 
                 max={30} 
                 defaultValue={5} 
                 controls={false} 
                 onChange={value => 
-                  editorSettins.setPadding(value, name.toLowerCase() as PaddingSettingModes)
+                  editorSettings.setPadding(value, name.toLowerCase() as PaddingSettingModes)
                 }
               />  
             )}
@@ -73,7 +73,7 @@ const PaddingInput = observer(() => {
         return null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, editorSettins.paddings])
+  }, [mode, editorSettings.paddings])
 
   return (
     <>
