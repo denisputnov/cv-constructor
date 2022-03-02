@@ -2,10 +2,12 @@ import React from 'react'
 import { DownloadOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite'
 import { Tooltip } from 'antd'
-import FloatingTriggerButton from '../../../lib/FloatingTriggerButton'
+
 
 import html2canvas from "html2canvas";
-import userData from '../../../store/userData';
+import userData from '../../../../store/userData';
+import FloatingTriggerButton from '../../../../lib/FloatingTriggerButton';
+
 
 const exportAsImage = async (imageFileName: string) => {
   const element = document.getElementById('print-area')!;

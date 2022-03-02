@@ -9,7 +9,10 @@ import { useSearchParams } from 'react-router-dom';
 
 import ImageUploader from '../../components/ImageUploader/ImageUploader';
 import EditorSettings from './components/EditorSettings/EditorSettings';
-import SiderTrigger from './components/SliderTrigger';
+import SiderTrigger from './components/side-buttons/SliderTrigger';
+import Print from './components/side-buttons/Print';
+import Save from './components/side-buttons/Save';
+import Info from './components/side-buttons/Info/Info';
 
 import ContactsPanel from './panels/ContactsPanel/ContactsPanel';
 import GlobalInfoPanel from './panels/GlobalInfoPanel';
@@ -19,8 +22,7 @@ import EducationPanel from './panels/EducationPanel/EducationPanel';
 import LanguagePanel from './panels/LanguagePanel/LanguagePanel';
 
 import Drawer from '../../components/Drawer/Drawer';
-import Print from './components/Print';
-import Save from './components/Save';
+
 
 const { Sider, Content } = Layout;
 
@@ -67,11 +69,14 @@ const Editor = () => {
         </StyledCollapse>
       </EditorSider>
       <EditorContent>
-        <EditorFloatingButtons $spaceAfter={2}>
+        <EditorFloatingButtons $spaceFrom={3}>
           <SiderTrigger collapsed={collapsed} onClick={() => setCollapsed(!collapsed)} />
           <EditorSettings />
           <Save />
           <Print />
+        </EditorFloatingButtons>
+        <EditorFloatingButtons $right $spaceFrom={1}>
+          <Info />
         </EditorFloatingButtons>
         <Drawer />
       </EditorContent>
@@ -85,7 +90,7 @@ const EditorLayout = styled(Layout)`
 
 const EditorFloatingButtons = styled.div<{
   $right?: boolean
-  $spaceAfter?: number
+  $spaceFrom?: number
 }>`
   position: absolute;
   display: flex;
@@ -96,8 +101,8 @@ const EditorFloatingButtons = styled.div<{
   flex-direction: column;
   z-index: 10;
 
-  > *:nth-child(${({ $spaceAfter }) => $spaceAfter ?? 1000}) {
-    margin-bottom: auto;
+  > *:nth-child(${({ $spaceFrom }) => $spaceFrom ?? 1000}) {
+    margin-top: auto;
   }
 `
 

@@ -1,6 +1,7 @@
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
-import FloatingTriggerButton from "../../../lib/FloatingTriggerButton";
+import FloatingTriggerButton from "../../../../lib/FloatingTriggerButton";
+
 
 interface SliderTriggerProps {
   collapsed: boolean;

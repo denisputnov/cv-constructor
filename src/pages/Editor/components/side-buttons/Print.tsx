@@ -3,7 +3,8 @@ import { observer } from 'mobx-react-lite'
 
 import { PrinterOutlined } from '@ant-design/icons'
 import { Tooltip } from 'antd'
-import FloatingTriggerButton from '../../../lib/FloatingTriggerButton'
+import FloatingTriggerButton from '../../../../lib/FloatingTriggerButton'
+
 
 const Print = observer(() => {
   return (
