@@ -18,7 +18,7 @@ const KeySkillsPanel = observer(() => {
     <PanelContentWrapper>
       <div>
         {userData.skills.map(skill => 
-          <StyledTag onClick={() => userData.removeSkill(skill)}>{skill}</StyledTag>
+          <StyledTag key={skill} onClick={() => userData.removeSkill(skill)}>{skill}</StyledTag>
         )}
         {!userData.skills.length && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
       </div>

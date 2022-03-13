@@ -8,6 +8,13 @@ export type Paddings = {
   bottom: number
 }
 
+export type FontSize = string;
+
+export type Settings = {
+  paddings: Paddings
+  customFontSize?: FontSize
+}
+
 class EditorSetitngs {
   paddings: Paddings = {
     top: 5,
@@ -16,7 +23,7 @@ class EditorSetitngs {
     bottom: 5
   }
 
-  customFontSize?: string = this.calculateFontSize()
+  customFontSize?: FontSize = this.calculateFontSize()
   
   constructor() {
     makeAutoObservable(this)
@@ -70,6 +77,13 @@ class EditorSetitngs {
     const MIN_FONT_SIZE = 9
     const MAX_FONT_SIZE = 5
     return (MIN_FONT_SIZE + MAX_FONT_SIZE * ((window.innerWidth - 1280) / (1920 - 1280))).toString()
+  }
+
+  get settings(): Settings {
+    return {
+      paddings: this.paddings,
+      customFontSize: this.customFontSize
+    }
   }
 }
 

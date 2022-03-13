@@ -5,6 +5,7 @@ import PaddingInput from "./PaddingInput"
 import FloatingTriggerButton from "../../../../lib/FloatingTriggerButton"
 import styled from "styled-components"
 import FontSizeInput from "./FontSizeInput"
+import ChooseAnotherTemplateButton from "./ChooseAnotherTemplateButton"
 
 const EditorSettings: React.FC = () => {
   const [opened, setOpened] = useState<boolean>(false)
@@ -32,6 +33,8 @@ const EditorSettingsContent = () => {
       <PaddingInput />
       <Divider orientation="left" orientationMargin={0}>Custom Font Size</Divider>
       <FontSizeInput />
+      <Divider orientation="left" orientationMargin={0}>Choose another template</Divider>
+      <ChooseAnotherTemplateButton />
     </StyledContent>
   )
 }

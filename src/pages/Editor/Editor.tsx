@@ -5,7 +5,7 @@ import { StyledCollapse } from './styled-components';
 
 import { Layout, Collapse } from 'antd';
 
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import ImageUploader from '../../components/ImageUploader/ImageUploader';
 import EditorSettings from './components/EditorSettings/EditorSettings';
@@ -21,8 +21,9 @@ import ExperiencePanel from './panels/ExperiencePanel/ExperiencePanel';
 import EducationPanel from './panels/EducationPanel/EducationPanel';
 import LanguagePanel from './panels/LanguagePanel/LanguagePanel';
 
-import Drawer from '../../components/Drawer/Drawer';
+import Drawer from '../../components/Drawer/Drawer'; 
 
+import { ErrorBoundary } from 'react-error-boundary';
 
 const { Sider, Content } = Layout;
 
@@ -36,6 +37,15 @@ const Editor = () => {
   useEffect(() => {
     setSearchParams({ editorCollapsed: collapsed.toString() })
   }, [collapsed, setSearchParams])
+
+  const DrawerFallbackComponent = () => {
+    return (
+      <DrawerFallbackContainer>
+        <div>Something went wrong</div>
+        <Link to="/classic" reloadDocument>Choose Default Template</Link>
+      </DrawerFallbackContainer>
+    )
+  }
 
   return (
     <EditorLayout>
@@ -78,11 +88,28 @@ const Editor = () => {
         <EditorFloatingButtons $right $spaceFrom={1}>
           <Info />
         </EditorFloatingButtons>
-        <Drawer />
+        <ErrorBoundary FallbackComponent={DrawerFallbackComponent}>
+          <Drawer />
+        </ErrorBoundary>
       </EditorContent>
     </EditorLayout>
   );
 }
+
+const DrawerFallbackContainer = styled.div`
+  width: 30vw;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0px 5px 35px 6px rgba(34, 60, 80, 0.2);
+  background-color: #fff;
+  border-radius: 20px;
+  justify-content: center;
+  > div {
+    font-size: 24px;
+  }
+`
 
 const EditorLayout = styled(Layout)`
   height: 100vh;

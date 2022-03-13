@@ -5,47 +5,51 @@ import Avatar from '../common/components/Avatar';
 import Icon from '../common/components/Icon';
 import { formatPhone, formatTime } from '../common/utils';
 
-const Classic: React.FC<TemplateProps> = ({ data }) => {
+const Classic: React.FC<TemplateProps> = ({ data, reversed = false }) => {
+  const AvatarAndBio = () => (
+    <SideWrapper>
+      <Avatar image={data.image ?? ""} aspectRatio="3/4" />
+      <Contacts>
+        {data.contacts.map(({ name, value }) => {
+          return (
+            <ContactsItem 
+              key={`drawer-contact-${name}`}
+            >
+              <Icon name={name}/>
+              {
+              ['phone', 'mobile'].includes(name.toLowerCase()) 
+                ? formatPhone(value) 
+                : value
+              }
+            </ContactsItem>
+          )
+        })}
+      </Contacts>
+      {
+        !!data.skills.length && 
+        <Block>
+          <Title>⌨️ Skills</Title>
+          {data.skills.map((skill, index) => <Skill key={`drawer-skill-${index}`}>{skill}</Skill>) }
+        </Block>
+      }
+      {
+        !!data.language.length && 
+        <Block $gap={0.25}>
+          <Title>🌎️ Languages</Title>
+          {data.language.map(({ name, level }, index) => (
+            <Block key={`drawer-language-${name}-${index}`}>
+              <LanguageName>{name}</LanguageName>
+              <LanguageLevel>{level}</LanguageLevel>
+            </Block>
+          ))}
+        </Block>
+      }
+    </SideWrapper>
+  )
+
   return (
-    <Layout>
-      <SideWrapper>
-        <Avatar image={data.image ?? ""} aspectRatio="3/4" />
-        <Contacts>
-          {data.contacts.map(({ name, value }) => {
-            return (
-              <ContactsItem 
-                key={`drawer-contact-${name}`}
-              >
-                <Icon name={name}/>
-                {
-                ['phone', 'mobile'].includes(name.toLowerCase()) 
-                  ? formatPhone(value) 
-                  : value
-                }
-              </ContactsItem>
-            )
-          })}
-        </Contacts>
-        {
-          !!data.skills.length && 
-          <Block>
-            <Title>⌨️ Skills</Title>
-            {data.skills.map((skill, index) => <Skill key={`drawer-skill-${index}`}>{skill}</Skill>) }
-          </Block>
-        }
-        {
-          !!data.language.length && 
-          <Block $gap={0.25}>
-            <Title>🌎️ Languages</Title>
-            {data.language.map(({ name, level }, index) => (
-              <Block key={`drawer-language-${name}-${index}`}>
-                <LanguageName>{name}</LanguageName>
-                <LanguageLevel>{level}</LanguageLevel>
-              </Block>
-            ))}
-          </Block>
-        }
-      </SideWrapper>
+    <Layout $reversed={reversed}>
+      {!reversed && <AvatarAndBio />}
       <SideWrapper>
         <Block>
           <Name>{data.global.name} {data.global.surname}</Name>
@@ -89,6 +93,7 @@ const Classic: React.FC<TemplateProps> = ({ data }) => {
           </Block>
         }
       </SideWrapper>
+      {reversed && <AvatarAndBio />}
     </Layout>
   )
 }
@@ -187,10 +192,12 @@ const SideWrapper = styled.div`
   gap: 2em;
 `
 
-const Layout = styled.div`
+const Layout = styled.div<{
+  $reversed?: boolean
+}>`
   display: grid;
   grid-template-rows: auto;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: ${({ $reversed }) => $reversed ? '2fr 1fr' : '1fr 2fr'};
   gap: 3%;
   height: 100%;
 `

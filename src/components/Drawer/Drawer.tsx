@@ -1,20 +1,27 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, Suspense, useMemo } from 'react';
 import styled from 'styled-components';
 import editorSettings, { Paddings } from '../../store/editorSettings';
 import { observer } from 'mobx-react-lite';
-import userData from '../../store/userData';
+import userData, { Summary } from '../../store/userData';
 import { getPaddingFromIndent } from './utils';
-import Classic from '../../templates/classic/Classic';
+
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { useParams } from 'react-router-dom';
 
 interface DrawerProps {
   columns?: number | number[];
   rows?: number | string;
   paddings?: Paddings;
+  templateName?: string;
+  dataOverride?: Summary;
 }
 
 const Drawer = observer(({
   columns = 1,
-  rows = 'auto'
+  rows = 'auto', 
+  templateName,
+  dataOverride
 }: DrawerProps) => {
   const drawerContentRef = useRef<HTMLDivElement>(null)
 
@@ -43,6 +50,9 @@ const Drawer = observer(({
     }
   }, [])
 
+  const { templateName: queryTemplateName } = useParams()
+  const Template = useMemo(() => React.lazy(() => import(`../../templates/${templateName ?? queryTemplateName ?? 'classic'}/index`)), [queryTemplateName, templateName])
+
   return (
     <DrawerWrapper 
       id='print-area'
@@ -50,7 +60,9 @@ const Drawer = observer(({
       $rows={rows}
     >
       <DrawerContent ref={drawerContentRef} $paddings={editorSettings.paddings} $fontSize={editorSettings.customFontSize}>
-        <Classic data={userData.summary} />
+        <Suspense fallback={<Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />}>
+          <Template data={dataOverride ?? userData.summary} />
+        </Suspense>
       </DrawerContent>
     </DrawerWrapper>
   );
