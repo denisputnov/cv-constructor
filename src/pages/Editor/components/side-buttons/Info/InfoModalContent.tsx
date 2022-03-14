@@ -1,7 +1,7 @@
 const General = () => (
   <>
-    <p><strong>CV-Constructor</strong> — is a service, which offers generalized instuments to create your curriculum vitae by all international rules from template.</p>
-    <p>The main idea of the project is to help specialists from all over the world. All templates corresponds to main rules of CV design. There are used many tips and recomendations from IT recruters to make your CV more readable and attractive.</p>
+    <p><strong>CV-Constructor</strong> — is a service, which offers generalized instruments to create your curriculum vitae by all international rules from template.</p>
+    <p>The main idea of the project is to help specialists from all over the world. All templates corresponds to main rules of CV design. There are used many tips and recommendations from IT recruiters to make your CV more readable and attractive.</p>
   </>
 )
 
